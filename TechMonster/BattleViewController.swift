@@ -10,6 +10,7 @@ import UIKit
 
 class BattleViewController: UIViewController {
     
+    var enemyAttackTimer: Timer!
     var enemy: Enemy!
     var player: Player!
     
@@ -54,6 +55,9 @@ class BattleViewController: UIViewController {
         enemyHPBar.progress = enemy.currentHP / enemy.maxHP
         
         attackButton.isHidden = false
+        
+        //敵の自動攻撃
+        enemyAttackTimer = Timer.scheduledTimer(timeInterval: enemy.attackInterval, target: self, selector: #selector(self.enemyAttack), userInfo: nil, repeats: true)
     }
     
     @IBAction func playerAttack() {
@@ -76,6 +80,8 @@ class BattleViewController: UIViewController {
         
         attackButton.isHidden = true
         
+        enemyAttackTimer.invalidate()
+        
         //アラート
         let finishedMessage: String
         if winPlayer == true {
@@ -90,6 +96,21 @@ class BattleViewController: UIViewController {
         })
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func enemyAttack() {
+        TechDraUtil.animateDamage(playerImageView)
+        TechDraUtil.playSE(fileName: "SE_attack")
+        
+        //hp更新
+        player.currentHP = player.currentHP - player.attackPower
+        playerHPBar.setProgress(player.currentHP / player.maxHP, animated: true)
+        
+        //敗北
+        if player.currentHP < 0 {
+            TechDraUtil.animateVanish(playerImageView)
+            finishBattle(winPlayer: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {

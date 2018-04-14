@@ -13,13 +13,24 @@ class LobbyViewController: UIViewController {
     var maxStamina: Float = 100
     var stamina: Float = 100
     var player: Player = Player()
+    var staminaTimer: Timer!
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var staminaBar: UIProgressView!
     @IBOutlet var levelLabel: UILabel!
     
     @IBAction func startBattle() {
-        performSegue(withIdentifier: "startBattle", sender: nil)
+        if stamina >= 20 {
+            stamina = stamina - 20
+            staminaBar.progress = stamina / maxStamina
+            performSegue(withIdentifier: "startBattle", sender: nil)
+        } else {
+            let alert = UIAlertController(title: "スタミナ不足", message: "スタミナが20必要です", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+       
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,8 +64,16 @@ class LobbyViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TechDraUtil.stopBGM()
+        print(stamina)
     }
 
+    @objc func cureStamina() {
+        if stamina < maxStamina {
+            stamina = min(stamina + 1, maxStamina)
+            staminaBar.progress = stamina / maxStamina
+            staminaTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.cureStamina), userInfo: nil, repeats: true)
+        }
+    }
         // Do any additional setup after loading the view.
     
 

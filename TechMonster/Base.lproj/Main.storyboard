@@ -67,6 +67,9 @@
                                 <state key="normal" title="冒険に行く" backgroundImage="gold_button.png">
                                     <color key="titleColor" red="0.57874745130000005" green="0.32151988149999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="startBattle" destination="BYZ-38-t0r" eventType="touchUpInside" id="19j-RR-yeO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -76,12 +79,12 @@
                         <outlet property="levelLabel" destination="FxF-eK-cHC" id="74x-JY-cFW"/>
                         <outlet property="nameLabel" destination="Gl3-Oo-aOB" id="Inb-PV-8HN"/>
                         <outlet property="staminaBar" destination="IaJ-6y-OdQ" id="o4k-Q0-3Xt"/>
-                        <segue destination="eD1-6C-UpS" kind="modal" modalTransitionStyle="crossDissolve" id="lBo-hq-u1L"/>
+                        <segue destination="eD1-6C-UpS" kind="modal" identifier="startBattle" modalTransitionStyle="crossDissolve" id="lBo-hq-u1L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="-1" y="134"/>
         </scene>
         <!--Battle View Controller-->
         <scene sceneID="saw-Go-0fp">
@@ -136,6 +139,9 @@
                                 <state key="normal" title="こうげき" backgroundImage="gold_button.png">
                                     <color key="titleColor" red="0.57874745130000005" green="0.32151988149999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="playerAttack" destination="eD1-6C-UpS" eventType="touchUpInside" id="Hw8-Z0-ZNs"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
